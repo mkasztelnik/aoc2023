@@ -22,18 +22,24 @@ defmodule AdventOfCode.Day01 do
   defp scan_numbers(list), do: scan_numbers(to_charlist(list), [])
 
   defp scan_numbers([], result), do: Enum.reverse(result)
+
   defp scan_numbers([x | rest], result) when x > ?0 and x <= ?9 do
     scan_numbers(rest, [x | result])
   end
-  defp scan_numbers([?o, ?n, ?e | rest], result),         do: scan_numbers(rest, [?1 | result])
-  defp scan_numbers([?t, ?w, ?o | rest], result),         do: scan_numbers(rest, [?2 | result])
+
+  defp scan_numbers([?o, ?n, ?e | rest], result), do: scan_numbers(rest, [?1 | result])
+  defp scan_numbers([?t, ?w, ?o | rest], result), do: scan_numbers(rest, [?2 | result])
   defp scan_numbers([?t, ?h, ?r, ?e, ?e | rest], result), do: scan_numbers(rest, [?3 | result])
-  defp scan_numbers([?f, ?o, ?u, ?r | rest], result),     do: scan_numbers(rest, [?4 | result])
-  defp scan_numbers([?f, ?i, ?v, ?e | rest], result),     do: scan_numbers(rest, [?5 | result])
-  defp scan_numbers([?s, ?i, ?x | rest], result),         do: scan_numbers(rest, [?6 | result])
+  defp scan_numbers([?f, ?o, ?u, ?r | rest], result), do: scan_numbers(rest, [?4 | result])
+  defp scan_numbers([?f, ?i, ?v, ?e | rest], result), do: scan_numbers(rest, [?5 | result])
+  defp scan_numbers([?s, ?i, ?x | rest], result), do: scan_numbers(rest, [?6 | result])
   defp scan_numbers([?s, ?e, ?v, ?e, ?n | rest], result), do: scan_numbers(rest, [?7 | result])
-  defp scan_numbers([_ | rest ] = [?e, ?i, ?g, ?h, ?t | _], result), do: scan_numbers(rest, [?8 | result])
-  defp scan_numbers([?n, ?i, ?n, ?e | rest], result),     do: scan_numbers(rest, [?9 | result])
+
+  defp scan_numbers([_ | rest] = [?e, ?i, ?g, ?h, ?t | _], result),
+    do: scan_numbers(rest, [?8 | result])
+
+  defp scan_numbers([?n, ?i, ?n, ?e | rest], result), do: scan_numbers(rest, [?9 | result])
+
   defp scan_numbers([_ | rest], result) do
     scan_numbers(rest, result)
   end

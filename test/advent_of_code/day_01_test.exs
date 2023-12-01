@@ -11,6 +11,7 @@ defmodule AdventOfCode.Day01Test do
     a1b2c3d4e5f
     treb7uchet
     """
+
     result = part1(input)
 
     assert result == 142

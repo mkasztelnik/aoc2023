@@ -37,33 +37,41 @@ defmodule AdventOfCode.Day02 do
     |> String.split("\n")
     |> Enum.map(&String.trim_trailing/1)
     |> Enum.filter(fn x -> x != "" end)
-    |> Enum.map(&parse_game/1)
-  end
-
-  defp parse_game(row) do
-    [game, moves] = String.split(row, ": ")
-
-    [_, id] = String.split(game, " ")
-
-    parsed_moves =
-      moves
-      |> String.split(": ")
-      |> List.last
-      |> String.split("; ")
-      |> Enum.map(fn x ->
-        for record <- String.split(x, ", "), into: %{} do
-          [nr, color] = String.split(record, " ")
-          {color, to_i(nr)}
-        end
-      end)
-
-    {to_i(id), parsed_moves}
-  end
-
-  defp to_i(str) do
-    {parsed, _} = Integer.parse(str)
-
-    parsed
+    |> Enum.map(&AdventOfCode.Day02.Parser.parse/1)
   end
 end
 
+
+defmodule AdventOfCode.Day02.Parser do
+  import NimbleParsec
+
+  game_id = ignore(string("Game "))
+            |> integer(min: 1)
+
+  red = integer(min: 1) |> ignore(string(" red")) |> tag("red")
+  green = integer(min: 1) |> ignore(string(" green")) |> tag("green")
+  blue = integer(min: 1) |> ignore(string(" blue")) |> tag("blue")
+  element = choice([red, green, blue])
+
+  grab = times(element |> ignore(optional(string(", "))), min: 1, max: 3) |> tag("grab")
+  grabs = repeat(grab |> ignore(optional(string("; ")))) |> tag("grabs")
+
+
+  defparsec :game,
+    game_id
+    |> ignore(string(": "))
+    |> concat(grabs)
+
+  def parse(line) do
+    {:ok, [id, {"grabs", grabs}], "", _, _, _} = game(line)
+
+    {
+      id,
+      grabs |> Enum.map(fn {"grab", list} -> to_map(list) end)
+    }
+  end
+
+  defp to_map(grab) do
+    for {color, [nr]} <- grab, into: %{}, do: {color, nr}
+  end
+end

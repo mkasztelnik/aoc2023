@@ -55,9 +55,7 @@ defmodule AdventOfCode.Day03 do
   defp parse(input) do
     {_, digits, symbols} =
       input
-      |> String.split("\n")
-      |> Enum.map(&String.trim_trailing/1)
-      |> Enum.filter(fn x -> x != "" end)
+      |> String.split("\n", trim: true)
       |> Enum.reduce({0, [], []}, fn line, {index, digits, symbols} ->
         {
           index + 1,

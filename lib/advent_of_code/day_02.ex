@@ -34,9 +34,7 @@ defmodule AdventOfCode.Day02 do
 
   def to_game(input) do
     input
-    |> String.split("\n")
-    |> Enum.map(&String.trim_trailing/1)
-    |> Enum.filter(fn x -> x != "" end)
+    |> String.split("\n", trim: true)
     |> Enum.map(&AdventOfCode.Day02.Parser.parse/1)
   end
 end

@@ -1,9 +1,7 @@
 defmodule AdventOfCode.Day01 do
   def part1(input) do
     input
-    |> String.split("\n")
-    |> Enum.map(&String.trim_trailing/1)
-    |> Enum.filter(fn x -> x != "" end)
+    |> String.split("\n", trim: true)
     |> Enum.map(&numbers/1)
     |> Enum.map(&first_last/1)
     |> Enum.sum()
@@ -11,9 +9,7 @@ defmodule AdventOfCode.Day01 do
 
   def part2(input) do
     input
-    |> String.split("\n")
-    |> Enum.map(&String.trim_trailing/1)
-    |> Enum.filter(fn x -> x != "" end)
+    |> String.split("\n", trim: true)
     |> Enum.map(&scan_numbers/1)
     |> Enum.map(&first_last/1)
     |> Enum.sum()

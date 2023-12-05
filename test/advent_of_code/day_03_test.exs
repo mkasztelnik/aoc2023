@@ -16,6 +16,7 @@ defmodule AdventOfCode.Day03Test do
     ...$.*....
     .664.598..
     """
+
     result = part1(input)
 
     assert result == 4361
@@ -34,8 +35,9 @@ defmodule AdventOfCode.Day03Test do
     ...$.*....
     .664.598..
     """
+
     result = part2(input)
 
-    assert result == 467835
+    assert result == 467_835
   end
 end

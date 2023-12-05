@@ -12,6 +12,7 @@ defmodule AdventOfCode.Day04Test do
     Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
     Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
     """
+
     result = part1(input)
 
     assert result == 13
@@ -26,6 +27,7 @@ defmodule AdventOfCode.Day04Test do
     Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
     Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
     """
+
     result = part2(input)
 
     assert result == 30

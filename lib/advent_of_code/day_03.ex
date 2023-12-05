@@ -41,9 +41,14 @@ defmodule AdventOfCode.Day03 do
 
   defp to_surrounding({x, y}) do
     [
-      {x - 1, y - 1}, {x, y - 1}, {x + 1, y - 1},
-      {x - 1, y}, {x + 1, y},
-      {x - 1, y + 1}, {x, y + 1}, {x + 1, y + 1},
+      {x - 1, y - 1},
+      {x, y - 1},
+      {x + 1, y - 1},
+      {x - 1, y},
+      {x + 1, y},
+      {x - 1, y + 1},
+      {x, y + 1},
+      {x + 1, y + 1}
     ]
   end
 
@@ -69,18 +74,22 @@ defmodule AdventOfCode.Day03 do
 
   defp get_digits(index, line) do
     numbers = Regex.scan(~r/\d+/, line) |> List.flatten()
-    indexes = Regex.scan(~r/\d+/, line, return: :index)
-              |> Enum.map(fn [{x, len}] ->
-                for xx <- x..(x + len - 1), do: {xx, index}
-              end)
+
+    indexes =
+      Regex.scan(~r/\d+/, line, return: :index)
+      |> Enum.map(fn [{x, len}] ->
+        for xx <- x..(x + len - 1), do: {xx, index}
+      end)
 
     Enum.zip(numbers, indexes)
   end
 
   defp get_symbols(index, line) do
     numbers = Regex.scan(~r/[^.\d]/, line) |> List.flatten()
-    indexes = Regex.scan(~r/[^.\d]/, line, return: :index)
-              |> Enum.map(fn [{x, _}] -> {x, index} end)
+
+    indexes =
+      Regex.scan(~r/[^.\d]/, line, return: :index)
+      |> Enum.map(fn [{x, _}] -> {x, index} end)
 
     Enum.zip(numbers, indexes)
   end

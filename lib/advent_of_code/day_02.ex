@@ -21,16 +21,16 @@ defmodule AdventOfCode.Day02 do
   end
 
   def to_max({id, moves}) do
-    max = Enum.reduce(moves, %{}, fn move, acc ->
-      acc
-      |> Map.put("red", max(acc["red"] || 0, move["red"] || 0))
-      |> Map.put("green", max(acc["green"] || 0, move["green"] || 0))
-      |> Map.put("blue", max(acc["blue"] || 0, move["blue"] || 0))
-    end)
+    max =
+      Enum.reduce(moves, %{}, fn move, acc ->
+        acc
+        |> Map.put("red", max(acc["red"] || 0, move["red"] || 0))
+        |> Map.put("green", max(acc["green"] || 0, move["green"] || 0))
+        |> Map.put("blue", max(acc["blue"] || 0, move["blue"] || 0))
+      end)
 
     {id, max}
   end
-
 
   def to_game(input) do
     input
@@ -39,12 +39,12 @@ defmodule AdventOfCode.Day02 do
   end
 end
 
-
 defmodule AdventOfCode.Day02.Parser do
   import NimbleParsec
 
-  game_id = ignore(string("Game "))
-            |> integer(min: 1)
+  game_id =
+    ignore(string("Game "))
+    |> integer(min: 1)
 
   red = integer(min: 1) |> ignore(string(" red")) |> tag("red")
   green = integer(min: 1) |> ignore(string(" green")) |> tag("green")
@@ -54,11 +54,12 @@ defmodule AdventOfCode.Day02.Parser do
   grab = times(element |> ignore(optional(string(", "))), min: 1, max: 3) |> tag("grab")
   grabs = repeat(grab |> ignore(optional(string("; ")))) |> tag("grabs")
 
-
-  defparsec :game,
+  defparsec(
+    :game,
     game_id
     |> ignore(string(": "))
     |> concat(grabs)
+  )
 
   def parse(line) do
     {:ok, [id, {"grabs", grabs}], "", _, _, _} = game(line)

@@ -15,6 +15,7 @@ defmodule AdventOfCode.Day08Test do
     GGG = (GGG, GGG)
     ZZZ = (ZZZ, ZZZ)
     """
+
     result = part1(input)
 
     assert result == 2
@@ -28,6 +29,7 @@ defmodule AdventOfCode.Day08Test do
     BBB = (AAA, ZZZ)
     ZZZ = (ZZZ, ZZZ)
     """
+
     result = part1(input)
 
     assert result == 6

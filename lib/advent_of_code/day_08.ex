@@ -6,10 +6,11 @@ defmodule AdventOfCode.Day08 do
   end
 
   defp calc_steps(map, instructions, starting_point, end_condition) do
-    Enum.reduce_while(Stream.cycle(instructions), {starting_point, 0}, fn instruction, {current, score} ->
+    Enum.reduce_while(Stream.cycle(instructions), {starting_point, 0}, fn instruction,
+                                                                          {current, score} ->
       if end_condition.(current),
         do: {:halt, score},
-      else: {:cont, {get(Map.get(map, current), instruction), score + 1}}
+        else: {:cont, {get(Map.get(map, current), instruction), score + 1}}
     end)
   end
 
@@ -37,7 +38,9 @@ defmodule AdventOfCode.Day08 do
     starting_points = map |> Map.keys() |> Enum.filter(fn s -> String.at(s, 2) == "A" end)
 
     starting_points
-    |> Enum.map(fn start -> calc_steps(map, instructions, start, fn s -> String.at(s, 2) == "Z" end) end)
+    |> Enum.map(fn start ->
+      calc_steps(map, instructions, start, fn s -> String.at(s, 2) == "Z" end)
+    end)
     |> Enum.reduce(1, fn nr, acc -> div(acc * nr, Integer.gcd(acc, nr)) end)
   end
 end

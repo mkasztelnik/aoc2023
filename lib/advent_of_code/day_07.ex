@@ -13,7 +13,7 @@ defmodule AdventOfCode.Day07 do
   defp ranking([2, 1, 1, 1]), do: 2
   defp ranking([1, 1, 1, 1, 1]), do: 1
 
-  defp score([a, b, c, d, e]), do: a * 100000000 + b * 1000000 + c * 10000 + d * 100 + e
+  defp score([a, b, c, d, e]), do: a * 100_000_000 + b * 1_000_000 + c * 10000 + d * 100 + e
 
   defp to_number(?A), do: 14
   defp to_number(?K), do: 13
@@ -45,6 +45,7 @@ defmodule AdventOfCode.Day07 do
     lines
     |> Enum.map(fn line ->
       [hand, bid] = String.split(line, " ")
+
       numbers =
         hand
         |> String.to_charlist()
@@ -62,7 +63,9 @@ defmodule AdventOfCode.Day07 do
 
       {hand, type, numbers, String.to_integer(bid)}
     end)
-    |> Enum.sort_by(fn {_, type, numbers, _,} -> ranking(type) * 10000000000 + score(numbers) end)
+    |> Enum.sort_by(fn {_, type, numbers, _} ->
+      ranking(type) * 10_000_000_000 + score(numbers)
+    end)
     |> Enum.reduce({0, 1}, fn {_, _, _, bid}, {score, rank} -> {score + rank * bid, rank + 1} end)
     |> elem(0)
   end

@@ -11,6 +11,7 @@ defmodule AdventOfCode.Day07Test do
     KTJJT 220
     QQQJA 483
     """
+
     result = part1(input)
 
     assert result == 6440
@@ -33,6 +34,7 @@ defmodule AdventOfCode.Day07Test do
     AKQJT 41
     23456 43
     """
+
     result = part1(input)
 
     assert result == 1343
@@ -46,6 +48,7 @@ defmodule AdventOfCode.Day07Test do
     KTJJT 220
     QQQJA 483
     """
+
     result = part2(input)
 
     assert result == 5905

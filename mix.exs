@@ -23,7 +23,8 @@ defmodule AdventOfCodeeMixProject do
     [
       {:benchee, "~> 1.0"},
       {:ssl_verify_fun, "~> 1.1.7", manager: :rebar3, override: true},
-      {:nimble_parsec, "~> 1.0"}
+      {:nimble_parsec, "~> 1.0"},
+      {:nx, "~> 0.5"}
     ]
   end
 end

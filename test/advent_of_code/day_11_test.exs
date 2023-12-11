@@ -3,19 +3,34 @@ defmodule AdventOfCode.Day11Test do
 
   import AdventOfCode.Day11
 
-  @tag :skip
-  test "part1" do
-    input = nil
-    result = part1(input)
+  @input """
+    ...#......
+    .......#..
+    #.........
+    ..........
+    ......#...
+    .#........
+    .........#
+    ..........
+    .......#..
+    #...#.....
+    """
 
-    assert result
+  test "part1" do
+    result = part1(@input)
+
+    assert result == 374
   end
 
-  @tag :skip
-  test "part2" do
-    input = nil
-    result = part2(input)
+  test "part2 10" do
+    result = solve(@input, 10)
 
-    assert result
+    assert result == 1030
+  end
+
+  test "part2 100" do
+    result = solve(@input, 100)
+
+    assert result == 8410
   end
 end

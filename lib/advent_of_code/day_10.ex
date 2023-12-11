@@ -87,6 +87,7 @@ defmodule AdventOfCode.Day10 do
   defp point({x, y}, :left), do: {x - 1, y}
   defp point({x, y}, :right), do: {x + 1, y}
 
+  # check floodfill
   def part2(input) do
     world = AdventOfCode.Day10.Map.parse(input)
     tunnel = world|> tunnel()

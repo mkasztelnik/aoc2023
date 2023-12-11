@@ -12,18 +12,20 @@ defmodule AdventOfCode.Day10 do
 
     tunnel(graph, world.start, current, world.start, [current])
   end
+
   defp tunnel(_, _, end_point, end_point, points), do: points
+
   defp tunnel(graph, previous, current, end_point, points) do
     [first, second] = Map.get(graph, current)
+
     if previous == first,
       do: tunnel(graph, current, second, end_point, [second | points]),
-    else: tunnel(graph, current, first, end_point, [first | points])
+      else: tunnel(graph, current, first, end_point, [first | points])
   end
 
   defp to_graph(map) do
     graph =
-      for x <- 0..(map.max_x - 1), y <- 0..(map.max_y - 1),
-        do: {{x, y}, connections(map, {x, y})}
+      for x <- 0..(map.max_x - 1), y <- 0..(map.max_y - 1), do: {{x, y}, connections(map, {x, y})}
 
     graph
     |> Enum.reject(fn {_, list} -> list == [] end)
@@ -37,9 +39,10 @@ defmodule AdventOfCode.Day10 do
     |> Enum.map(fn direction ->
       connection = point(current, direction)
       connection_value = AdventOfCode.Day10.Map.get(map, connection)
+
       if connection_value in candidates(value, direction),
         do: connection,
-      else: nil
+        else: nil
     end)
     |> Enum.filter(&(!is_nil(&1)))
   end
@@ -69,7 +72,6 @@ defmodule AdventOfCode.Day10 do
   defp candidates(?J, :left), do: [?-, ?L, ?F, ?S]
   defp candidates(?J, :right), do: []
 
-
   defp candidates(?7, :up), do: []
   defp candidates(?7, :down), do: [?|, ?L, ?J, ?S]
   defp candidates(?7, :left), do: [?-, ?L, ?F, ?S]
@@ -90,7 +92,7 @@ defmodule AdventOfCode.Day10 do
   # check floodfill
   def part2(input) do
     world = AdventOfCode.Day10.Map.parse(input)
-    tunnel = world|> tunnel()
+    tunnel = world |> tunnel()
 
     tunnel_set = MapSet.new(tunnel)
     all = MapSet.new(AdventOfCode.Day10.Map.all(world))
@@ -108,18 +110,17 @@ defmodule AdventOfCode.Day10 do
       Enum.chunk_every(tunnel ++ [first], 2, 1, :discard)
       |> Enum.reduce(0, fn [{_, ay} = a, {_, by} = b], wn ->
         if ay <= y,
-          do: (if (by > y) and cross(a, b, point) > 0, do: wn + 1, else: wn),
-          else: (if (by <= y) and cross(a, b, point) < 0, do: wn - 1, else: wn)
-
+          do: if(by > y and cross(a, b, point) > 0, do: wn + 1, else: wn),
+          else: if(by <= y and cross(a, b, point) < 0, do: wn - 1, else: wn)
       end)
+
     winding_number != 0
   end
 
   defp cross({ax, ay}, {bx, by}, {cx, cy}) do
-    (bx - ax) * (cy - ay) - (cx - ax) * (by - ay);
+    (bx - ax) * (cy - ay) - (cx - ax) * (by - ay)
   end
 end
-
 
 defmodule AdventOfCode.Day10.Map do
   defstruct points: {}, max_x: 0, max_y: 0, start: {}
@@ -133,8 +134,12 @@ defmodule AdventOfCode.Day10.Map do
     start = find_start(map)
     map = map |> Enum.map(&List.to_tuple/1) |> List.to_tuple()
 
-    %AdventOfCode.Day10.Map{points: map, start: start,
-      max_y: tuple_size(map), max_x: map |> elem(0) |> tuple_size()}
+    %AdventOfCode.Day10.Map{
+      points: map,
+      start: start,
+      max_y: tuple_size(map),
+      max_x: map |> elem(0) |> tuple_size()
+    }
   end
 
   defp find_start(map) do

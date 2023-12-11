@@ -22,8 +22,8 @@ defmodule AdventOfCode.Day11 do
   end
 
   defp expansions(galaxies) do
-    xes = Enum.map(galaxies, &(elem(&1, 0)))
-    yes = Enum.map(galaxies, &(elem(&1, 1)))
+    xes = Enum.map(galaxies, &elem(&1, 0))
+    yes = Enum.map(galaxies, &elem(&1, 1))
 
     {cals_expansions(xes), cals_expansions(yes)}
   end
@@ -36,11 +36,12 @@ defmodule AdventOfCode.Day11 do
 
   defp expand(galaxies, x_expansions, y_expansions, size) do
     Enum.map(galaxies, fn {x, y} ->
-      x_expansion = (Enum.filter(x_expansions, &(&1 < x)) |> length())
-      y_expansion = (Enum.filter(y_expansions, &(&1 < y)) |> length())
+      x_expansion = Enum.filter(x_expansions, &(&1 < x)) |> length()
+      y_expansion = Enum.filter(y_expansions, &(&1 < y)) |> length()
+
       {
         x + x_expansion * size,
-        y + y_expansion * size,
+        y + y_expansion * size
       }
     end)
   end
@@ -51,7 +52,7 @@ defmodule AdventOfCode.Day11 do
         Enum.reduce(line, {0, galaxies}, fn ch, {x, g} ->
           case ch do
             ?# -> {x + 1, [{x, y} | g]}
-            _  -> {x + 1, g}
+            _ -> {x + 1, g}
           end
         end)
 
@@ -65,7 +66,7 @@ defmodule AdventOfCode.Day11 do
       Enum.flat_map(list, fn g2 ->
         if g1 < g2,
           do: [{g1, g2}],
-        else: []
+          else: []
       end)
     end)
   end

@@ -11,6 +11,7 @@ defmodule AdventOfCode.Day10Test do
     -L-J|
     L|-JF
     """
+
     result = part1(input)
 
     assert result == 4
@@ -24,6 +25,7 @@ defmodule AdventOfCode.Day10Test do
     .L-J.
     .....
     """
+
     result = part2(input)
 
     assert result == 1
@@ -41,6 +43,7 @@ defmodule AdventOfCode.Day10Test do
     .L--J.L--J.
     ...........
     """
+
     result = part2(input)
 
     assert result == 4
@@ -58,6 +61,7 @@ defmodule AdventOfCode.Day10Test do
     .L--JL--J.
     ..........
     """
+
     result = part2(input)
 
     assert result == 4
@@ -76,6 +80,7 @@ defmodule AdventOfCode.Day10Test do
     ....FJL-7.||.||||...
     ....L---J.LJ.LJLJ...
     """
+
     result = part2(input)
 
     assert result == 8
@@ -94,6 +99,7 @@ defmodule AdventOfCode.Day10Test do
     L.L7LFJ|||||FJL7||LJ
     L7JLJL-JLJLJL--JLJ.L
     """
+
     result = part2(input)
 
     assert result == 10

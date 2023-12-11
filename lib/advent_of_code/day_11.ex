@@ -9,16 +9,29 @@ defmodule AdventOfCode.Day11 do
       |> String.split("\n", trim: true)
       |> Enum.map(&String.to_charlist/1)
 
-    y_expansions = map |> expansion_indexex()
-    x_expansions = map |> transpose() |> expansion_indexex()
+    galaxies = find_galaxies(map)
+    {x_expansions, y_expansions} = expansions(galaxies)
 
-    find_galaxies(map)
+    galaxies
     |> expand(x_expansions, y_expansions, size)
     |> combinations()
     |> Enum.map(fn {{x1, y1}, {x2, y2}} ->
       abs(x1 - x2) + abs(y1 - y2)
     end)
     |> Enum.sum()
+  end
+
+  defp expansions(galaxies) do
+    xes = Enum.map(galaxies, &(elem(&1, 0)))
+    yes = Enum.map(galaxies, &(elem(&1, 1)))
+
+    {cals_expansions(xes), cals_expansions(yes)}
+  end
+
+  defp cals_expansions(vals) do
+    max = Enum.max(vals)
+
+    MapSet.difference(MapSet.new(0..max), MapSet.new(vals))
   end
 
   defp expand(galaxies, x_expansions, y_expansions, size) do
@@ -55,17 +68,6 @@ defmodule AdventOfCode.Day11 do
         else: []
       end)
     end)
-  end
-
-  defp expansion_indexex(map) do
-    map
-    |> Enum.with_index()
-    |> Enum.filter(fn {line, _} -> Enum.all?(line, &(&1 == ?.)) end)
-    |> Enum.map(&(elem(&1, 1)))
-  end
-
-  defp transpose(map) do
-    map |> Nx.tensor() |> Nx.transpose() |> Nx.to_list()
   end
 
   def part2(input) do

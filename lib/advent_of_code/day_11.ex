@@ -14,8 +14,8 @@ defmodule AdventOfCode.Day11 do
 
     find_galaxies(map)
     |> expand(x_expansions, y_expansions, size)
-    |> combinations(2)
-    |> Enum.map(fn [{x1, y1}, {x2, y2}] ->
+    |> combinations()
+    |> Enum.map(fn {{x1, y1}, {x2, y2}} ->
       abs(x1 - x2) + abs(y1 - y2)
     end)
     |> Enum.sum()
@@ -47,13 +47,15 @@ defmodule AdventOfCode.Day11 do
     |> elem(1)
   end
 
-  def combinations(_, 0), do: [[]]
-  def combinations([], _), do: []
-  def combinations([h|t], k) do
-    ((for l <- combinations(t, k - 1), do: [h|l]) ++ combinations(t, k))
-    |> Enum.uniq
+  def combinations(list) do
+    Enum.flat_map(list, fn g1 ->
+      Enum.flat_map(list, fn g2 ->
+        if g1 < g2,
+          do: [{g1, g2}],
+        else: []
+      end)
+    end)
   end
-  def combinations(enum, k), do: combinations(Enum.to_list(enum), k)
 
   defp expansion_indexex(map) do
     map

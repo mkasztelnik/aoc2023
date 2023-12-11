@@ -13,7 +13,7 @@ defmodule AdventOfCode.Day11 do
     {x_expansions, y_expansions} = expansions(galaxies)
 
     galaxies
-    |> expand(x_expansions, y_expansions, size)
+    |> expand(x_expansions, y_expansions, size - 1)
     |> combinations()
     |> Enum.map(fn {{x1, y1}, {x2, y2}} ->
       abs(x1 - x2) + abs(y1 - y2)
@@ -39,8 +39,8 @@ defmodule AdventOfCode.Day11 do
       x_expansion = (Enum.filter(x_expansions, &(&1 < x)) |> length())
       y_expansion = (Enum.filter(y_expansions, &(&1 < y)) |> length())
       {
-        x + x_expansion * size - x_expansion,
-        y + y_expansion * size - y_expansion,
+        x + x_expansion * size,
+        y + y_expansion * size,
       }
     end)
   end

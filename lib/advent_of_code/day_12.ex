@@ -1,7 +1,8 @@
 defmodule AdventOfCode.Day12 do
   def part1(input) do
     parse(input)
-    |> Enum.map(&solve/1)
+    |> Task.async_stream(&solve/1, ordered: false)
+    |> Stream.map(&elem(&1, 1))
     |> Enum.sum()
   end
 
@@ -55,7 +56,8 @@ defmodule AdventOfCode.Day12 do
 
   def part2(input) do
     parse(input)
-    |> Enum.map(&solve_folded/1)
+    |> Task.async_stream(&solve_folded/1, ordered: false)
+    |> Stream.map(&elem(&1, 1))
     |> Enum.sum()
   end
 end
